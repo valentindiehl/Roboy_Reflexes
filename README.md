@@ -8,7 +8,7 @@ Furthermore, an Intel Edison is to be used to attach the whole functionality to 
 
 Our template is run with ROS catkin and can be extended to different reflexes.
 
-Prerequisites:
+##Prerequisites:
 
 roboy_ros_control 
 roboy_ros_trajectory
@@ -16,4 +16,22 @@ roboy_ros_trajectory
 for recording data:
 roboy_gui
 
-To build the project you need to clone the project into the catkin source workspace
+##Building
+
+To build the project you need to clone the project into the catkin workspace src folder
+
+Example:
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/valentindiehl/Roboy_Reflexes.git
+cd  workspace src folder
+
+Example:
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/valentindiehl/Roboy_Reflexes.git
+cd ..
+catkin_make
+```
