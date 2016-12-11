@@ -1,4 +1,7 @@
 #include "roboy_ros_trajectory.hpp"
+#include "../include/flexrayusbinterface/FlexRayHardwareInterface.hpp"
+
+FlexRayHardwareInterface flexray;
 
 Roboy_Ros_Trajectory::Roboy_Ros_Trajectory() {
     if (!ros::isInitialized()) {
@@ -81,12 +84,29 @@ bool Roboy_Ros_Trajectory::initializeMotors(vector<int8_t> &motors, vector<uint8
     return initialize_srv.call(msg);
 }
 
+double readDisplacementSensorLeft(void) {
+  flexray.exchangeData();
+  return flexray.GanglionData[0].muscleState[2].tendonDisplacement / 32768.0f;
+}
+
+double readDisplacementSensorRight(void) {
+  flexray.exchangeData();
+  return flexray.GanglionData[2].muscleState[2].tendonDisplacement / 32768.0f;
+}
+
 int main(int argc, char *argv[]) {
     ros::init(argc, argv, "roboy_ros_trajectory");
+    
+    // Two critical displacement motor knee values
+    // You can adjust these.
+    
+    double critical_knee_left = 0.02454;
+    double critical_knee_right = 0.0199758;
+    double displacement_val_before = 0;
 
     Roboy_Ros_Trajectory roboy_ros_trajectory;
     // the behaviour we want to play is called test and located in ~/.roboy_gui/behaviours
-    roboy_ros_trajectory.loadBehaviour("test");
+    roboy_ros_trajectory.loadBehaviour("standupup");
     // it uses 16 motors
     vector<int8_t> motors = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     // all in position control
@@ -100,12 +120,38 @@ int main(int argc, char *argv[]) {
         int id = roboy_ros_trajectory.behaviours.begin()->first;
         // we upload the trajectories to the position controllers, who process them
         roboy_ros_trajectory.uploadBehaviour(id);
-        // we send a play steering message
-        roboy_ros_trajectory.playBehaviour(id);
+        
+    ROS_INFO("Now start to listen over FlexRay to dispacement data");
+        
+    flexray.initForceControl();
+    
+    ROS_INFO("All motors in force mode. ");
+    
+    ROS_INFO("Legs will be moving now. ");
+    
+    while(true)
+    {
+        double displacement1 = readDisplacementSensorLeft();
+	double displacement2 = readDisplacementSensorRight();
+	ROS_INFO("dis left" + displacement1);
+	ROS_INFO("dis right" + displacement2);
+        ROS_INFO("dis before" + displacement_val_before);
+      
+        if(displacement1 <= critical_knee_left && displacement2 <= critical_knee_right && displacement_val_before < displacement1)
+        {
+            ROS_INFO("Detected critical position. Play motion and move back to stable position");
+            
+            // we send a play steering message
+            roboy_ros_trajectory.playBehaviour(id);
+            ROS_INFO("Robot should be stabilized!. Congrats!");
+	    break;
+        }
+        displacement_val_before = displacement1;
+    }
+    
     } else {
         ROS_ERROR("failed to initialize motors, did you launch roboy?\n $ roslaunch roboy_hardware roboy.launch");
     }
-
 
     return 0;
 }
