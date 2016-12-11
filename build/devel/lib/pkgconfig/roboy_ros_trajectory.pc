@@ -1,8 +1,0 @@
-prefix=/home/valentin/catkin_ws/src/roboy_reflexes/build/devel
-
-Name: roboy_ros_trajectory
-Description: Description of roboy_ros_trajectory
-Version: 0.0.1
-Cflags: 
-Libs: -L/home/valentin/catkin_ws/src/roboy_reflexes/build/devel/lib 
-Requires: roscpp rospy std_msgs message_generation
