@@ -2,8 +2,8 @@
 #include "ros/ros.h"
 #include "std_msgs/Float32.h"
 
-    double static critical_knee_left = 0.02454;
-    double static displacement_val_before = 0;
+    double static critical_knee_left = 0;
+    double static displacement_val_before = 0.0350;
     int id = 0;
 Roboy_Ros_Trajectory roboy_ros_trajectory;
 
@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
 
 	ros::NodeHandle n;
 
-	ros::Subscriber sub = n.subscribe("/roboy/ganglion0/motor2/displacement", 1000, &callback);
+	ros::Subscriber sub = n.subscribe("/roboy/ganglion2/motor3/displacement", 1000, &callback);
 
 	ros::spin();
     
