@@ -25,13 +25,6 @@ Example:
 ```
 cd ~/catkin_ws/src
 git clone https://github.com/valentindiehl/Roboy_Reflexes.git
-cd  workspace src folder
-
-Example:
-
-```
-cd ~/catkin_ws/src
-git clone https://github.com/valentindiehl/Roboy_Reflexes.git
 cd ..
 catkin_make
 ```
