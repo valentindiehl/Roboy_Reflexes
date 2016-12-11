@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package>
-  <name>roboy_reflexes</name>
+  <name>roboy_ros_trajectory</name>
   <version>0.0.1</version>
-  <description>Hackathon boilerplate to implement recorded reflexes on muscle position</description>
+  <description>roboy_ros_trajectory package for recording and playing back trajectories</description>
 
-  <maintainer email="valentindiehl@googlemail.com">Valentin Diehl, Almin Causevic</maintainer>
+  <maintainer email="zickyboy13@roboy.org">Simon Trendel</maintainer>
 
   <license>BSD</license>
 

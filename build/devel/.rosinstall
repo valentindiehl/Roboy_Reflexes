@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/valentin/catkin_ws/src/roboy_reflexes/build/devel/setup.sh

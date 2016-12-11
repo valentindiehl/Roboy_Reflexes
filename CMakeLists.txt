@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(roboy_ros_trajectory)
+project(roboy_reflexes)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 
@@ -22,7 +22,7 @@ include_directories(
 )
 
 ## Declare a cpp executable
-add_executable(roboy_ros_trajectory src/roboy_ros_trajectory.cpp src/RoboyBehaviourXmlParser.cpp)
-add_dependencies(roboy_ros_trajectory ${catkin_EXPORTED_TARGETS})
-qt5_use_modules(roboy_ros_trajectory Core)
-target_link_libraries( roboy_ros_trajectory ${catkin_LIBRARIES} )
+add_executable(roboy_reflexes src/roboy_ros_trajectory.cpp src/RoboyBehaviourXmlParser.cpp)
+add_dependencies(roboy_reflexes ${catkin_EXPORTED_TARGETS})
+qt5_use_modules(roboy_reflexes Core)
+target_link_libraries( roboy_reflexes ${catkin_LIBRARIES} )
